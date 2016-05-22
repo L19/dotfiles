@@ -4,7 +4,17 @@ bindkey -v
 
 ## Prompt
 #
-RPROMPT="[%~]"
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%u%c[%b]%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+recmd () { vcs_info }
+
+PROMPT=[%~]' ${vcs_info_msg_0_} $ '
+RPROMPT=''
 
 ## Completion
 #
@@ -37,3 +47,4 @@ bindkey "\\en" history-beginning-search-forward-end
 ## Alias
 #
 alias ls="ls -G"
+

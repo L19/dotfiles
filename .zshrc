@@ -15,9 +15,8 @@ precmd () { vcs_info }
 
 PROMPT=[%~]'${vcs_info_msg_0_} $ '
 RPROMPT=''
-
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-            PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
+            PROMPT="%F{white}${HOST%%.*}%f ${PROMPT}"
 
 ## Completion
 #
@@ -49,5 +48,12 @@ bindkey "\\en" history-beginning-search-forward-end
 
 ## Alias
 #
-alias ls="ls -G"
+case ${OSTYPE} in
+    darwin*)
+        alias ls="ls -G"
+        ;;
+    linux*)
+        alias ls="ls --color=auto"
+        ;;
+esac
 

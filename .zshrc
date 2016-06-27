@@ -17,7 +17,7 @@ PROMPT=[%~]'${vcs_info_msg_0_} $ '
 RPROMPT=''
 
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-            PROMPT="%{^[[37m%}${HOST%%.*} ${PROMPT}"
+            PROMPT="%{\[37m%}${HOST%%.*} ${PROMPT}"
 
 ## Completion
 #

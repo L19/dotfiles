@@ -12,6 +12,7 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
+call dein#add('derekwyatt/vim-scala')
 
 call dein#end()
 
@@ -34,7 +35,12 @@ set autoindent
 set whichwrap=b,s,[,],<,>
 set clipboard=unnamed,autoselect
 set backspace=indent,eol,start
+set swapfile
+set directory=~/.vim/swapfiles
+set backup
+set backupdir=~/.vim/backups
 let g:sh_indent_case_labels=1
+
 " markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 

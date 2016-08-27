@@ -1,14 +1,18 @@
 " ----------------------------------------------------------------------------------------------------
 " dein
 " ----------------------------------------------------------------------------------------------------
-if &compatible
-  set nocompatible
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.vim') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_home . '/dein'
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+if !isdirectory(s:dein_repo_dir)
+    call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 call dein#begin(expand('~/.vim/dein'))
 
 call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/neocomplete.vim')
 call dein#add('scrooloose/nerdtree')
 call dein#add('jistr/vim-nerdtree-tabs')
@@ -17,6 +21,8 @@ call dein#add('tyru/open-browser.vim')
 call dein#add('tyru/caw.vim.git')
 call dein#add('derekwyatt/vim-scala')
 call dein#add('plasticboy/vim-markdown')
+
+call dein#add('kmnk/vim-unite-giti.git')
 
 call dein#end()
 
@@ -31,9 +37,9 @@ endif
 
 set showmatch
 set number
-set tabstop=4
-set expandtab
-set shiftwidth=4
+set tabstop=2
+" set expandtab
+set shiftwidth=2
 set smartindent
 set autoindent
 set whichwrap=b,s,[,],<,>

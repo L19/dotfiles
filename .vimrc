@@ -35,6 +35,14 @@ if has("syntax")
     syntax on
 endif
 
+if !isdirectory("~/.vim/backups")
+	call system("mkdir ~/.vim/backups")
+endif
+
+if !isdirectory("~/.vim/swapfiles")
+	call system("mkdir ~/.vim/swapfiles")
+endif
+
 set showmatch
 set number
 set tabstop=2

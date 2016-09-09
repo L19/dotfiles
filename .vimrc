@@ -1,6 +1,8 @@
 " ----------------------------------------------------------------------------------------------------
 " dein
 " ----------------------------------------------------------------------------------------------------
+
+" deinが未インストールの場合はインストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.vim') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -11,18 +13,17 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 call dein#begin(expand('~/.vim/dein'))
 
+call dein#add('jistr/vim-nerdtree-tabs')
+call dein#add('kannokanno/previm')
+call dein#add('kmnk/vim-unite-giti.git')
+call dein#add('plasticboy/vim-markdown')
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/neocomplete.vim')
 call dein#add('scrooloose/nerdtree')
-call dein#add('jistr/vim-nerdtree-tabs')
-call dein#add('kannokanno/previm')
-call dein#add('tyru/open-browser.vim')
 call dein#add('tyru/caw.vim.git')
-call dein#add('derekwyatt/vim-scala')
-call dein#add('plasticboy/vim-markdown')
-
-call dein#add('kmnk/vim-unite-giti.git')
+call dein#add('tyru/open-browser.vim')
+call dein#add('violetyk/neocomplete-php.vim')
 
 call dein#end()
 
@@ -59,6 +60,7 @@ set backup
 set backupdir=~/.vim/backups
 let g:sh_indent_case_labels=1
 let g:vim_markdown_folding_disabled=1
+
 "" NERDTree
 let g:nerdtree_tabs_open_on_console_startup=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -179,5 +181,4 @@ vmap <C-/> <Plug>(caw:i:toggle)
 " call submode#map('bufmove', 'n', '', '<', '<C-w><')
 " call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 " call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-
 

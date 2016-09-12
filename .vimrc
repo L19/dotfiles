@@ -1,6 +1,6 @@
-" ----------------------------------------------------------------------------------------------------
-" dein
-" ----------------------------------------------------------------------------------------------------
+" ----------------------------------------------
+" プラグインの管理
+" ----------------------------------------------
 
 " deinが未インストールの場合はインストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.vim') : $XDG_CACHE_HOME
@@ -13,27 +13,29 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 call dein#begin(expand('~/.vim/dein'))
 
-call dein#add('jistr/vim-nerdtree-tabs')
+" call dein#add('jistr/vim-nerdtree-tabs')
 call dein#add('kannokanno/previm')
-call dein#add('kmnk/vim-unite-giti.git')
+" call dein#add('kmnk/vim-unite-giti.git')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/neocomplete.vim')
-call dein#add('scrooloose/nerdtree')
-call dein#add('tyru/caw.vim.git')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/vimfiler')
+" call dein#add('scrooloose/nerdtree')
+" call dein#add('tyru/caw.vim.git')
 call dein#add('tyru/open-browser.vim')
-call dein#add('violetyk/neocomplete-php.vim')
+" call dein#add('vim-scripts/project.vim')
+" call dein#add('vim-scripts/sudo.vim')
 
 call dein#end()
 
 filetype plugin indent on
 
-" ----------------------------------------------------------------------------------------------------
-" General Settings
-" ----------------------------------------------------------------------------------------------------
+" -----------------------------------------------
+" 一般設定
+" -----------------------------------------------
 if has("syntax")
-    syntax on
+	syntax on
 endif
 
 if !isdirectory("~/.vim/backups")
@@ -45,104 +47,57 @@ if !isdirectory("~/.vim/swapfiles")
 endif
 
 set showmatch
+set hlsearch
 set number
 set tabstop=2
 " set expandtab
 set shiftwidth=2
 set smartindent
 set autoindent
-set whichwrap=b,s,[,],<,>
-set clipboard=unnamed,autoselect
+set whichwrap=b,s,h,l,[,],<,>
+set clipboard+=unnamed,autoselect
 set backspace=indent,eol,start
-set swapfile
-set directory=~/.vim/swapfiles
-set backup
-set backupdir=~/.vim/backups
+set swapfile directory=~/.vim/swapfiles
+set backup backupdir=~/.vim/backups
+set list listchars=tab:>-,trail:_
+
+"" 外部grepを使用する
+" set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
+" set grepprg=grep -nh
+
 let g:sh_indent_case_labels=1
 let g:vim_markdown_folding_disabled=1
 
-"" NERDTree
-let g:nerdtree_tabs_open_on_console_startup=1
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" -------------------------------------------------
+" コーディング
+" -------------------------------------------------
+"" 自動的に閉じる
+imap { {}<LEFT>
+imap [ []<LEFT>
+imap ( ()<LEFT>
 
-"" neocomplete
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"" カーソル位置を保存する
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+"" 線を引く
+inoreabbrev <expr> dl repeat('*', 80 - col('.'))
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" PHPのシンタックスチェック
+augroup phpsyntaxcheck
+	autocmd!
+	autocmd BufWrite *.php w !php -l
+augroup END
 
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+" ---------------------------------------------------
+" プラグインの設定
+" ---------------------------------------------------
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+"" Vimfiler
+let g:vimfiler_as_default_explorer=1
 
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-
-" ----------------------------------------------------------------------------------------------------
-" Key Binds
-" ----------------------------------------------------------------------------------------------------
-nnoremap <silent><C-e> :NERDTreeTabsToggle<CR>
-
+" ----------------------------------------------------
+" キーバインド
+" ----------------------------------------------------
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -169,16 +124,21 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <ESC><ESC> :nohlsearch<CR>
+vnoremap < <gv
+vnoremap > >gv
 
-nmap <C-/> <Plug>(caw:i:toggle)
-vmap <C-/> <Plug>(caw:i:toggle)
+" ------------------------------------------------------------------------
+" その他の設定ファイル
+" ------------------------------------------------------------------------
+if has('mac')
 
-" call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
-" call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
-" call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
-" call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
-" call submode#map('bufmove', 'n', '', '>', '<C-w>>')
-" call submode#map('bufmove', 'n', '', '<', '<C-w><')
-" call submode#map('bufmove', 'n', '', '+', '<C-w>+')
-" call submode#map('bufmove', 'n', '', '-', '<C-w>-')
+elseif has('unix')
+	
+endif
+
+" neocompleteの設定読み込み
+if version >= 704 && has('lua')
+	source ~/.vim/vimrc.d/vim74.vimrc
+endif
 

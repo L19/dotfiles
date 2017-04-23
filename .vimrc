@@ -13,19 +13,14 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 call dein#begin(expand('~/.vim/dein'))
 
-" call dein#add('jistr/vim-nerdtree-tabs')
 call dein#add('kannokanno/previm')
-" call dein#add('kmnk/vim-unite-giti.git')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/neocomplete.vim')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler')
-" call dein#add('scrooloose/nerdtree')
-" call dein#add('tyru/caw.vim.git')
+call dein#add('tpope/vim-surround')
 call dein#add('tyru/open-browser.vim')
-" call dein#add('vim-scripts/project.vim')
-" call dein#add('vim-scripts/sudo.vim')
 
 call dein#end()
 
@@ -60,6 +55,7 @@ set backspace=indent,eol,start
 set swapfile directory=~/.vim/swapfiles
 set backup backupdir=~/.vim/backups
 set list listchars=tab:>-,trail:_
+set ambiwidth=double
 
 "" 外部grepを使用する
 " set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f

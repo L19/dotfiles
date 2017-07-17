@@ -7,7 +7,7 @@ let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.vim') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
-    call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
@@ -30,22 +30,22 @@ filetype plugin indent on
 " 一般設定
 " -----------------------------------------------
 if has("syntax")
-	syntax on
+  syntax on
 endif
 
 if !isdirectory("~/.vim/backups")
-	call system("mkdir ~/.vim/backups")
+  call system("mkdir ~/.vim/backups")
 endif
 
 if !isdirectory("~/.vim/swapfiles")
-	call system("mkdir ~/.vim/swapfiles")
+  call system("mkdir ~/.vim/swapfiles")
 endif
 
 set showmatch
 set hlsearch
 set number
 set tabstop=2
-" set expandtab
+set expandtab
 set shiftwidth=2
 set smartindent
 set autoindent
@@ -80,8 +80,8 @@ inoreabbrev <expr> dl repeat('*', 80 - col('.'))
 
 " PHPのシンタックスチェック
 augroup phpsyntaxcheck
-	autocmd!
-	autocmd BufWrite *.php w !php -l
+  autocmd!
+  autocmd BufWrite *.php w !php -l
 augroup END
 
 " ---------------------------------------------------
@@ -130,11 +130,11 @@ vnoremap > >gv
 if has('mac')
 
 elseif has('unix')
-	
+
 endif
 
 " neocompleteの設定読み込み
 if version >= 704 && has('lua')
-	source ~/.vim/vimrc.d/vim74.vimrc
+  source ~/.vim/vimrc.d/vim74.vimrc
 endif
 

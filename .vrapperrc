@@ -1,33 +1,3 @@
-" -----------------------------------------------
-" 一般設定
-" -----------------------------------------------
-if has("syntax")
-	syntax on
-endif
-
-set showmatch
-set hlsearch
-set number
-set tabstop=2
-" set expandtab
-set shiftwidth=2
-set smartindent
-set autoindent
-set whichwrap=b,s,h,l,[,],<,>
-set clipboard+=unnamed,autoselect
-set backspace=indent,eol,start
-set swapfile directory=~/.vim/swapfiles
-set backup backupdir=~/.vim/backups
-set list listchars=tab:>-,trail:_
-set ambiwidth=double
-
-"" 外部grepを使用する
-" set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
-" set grepprg=grep -nh
-
-let g:sh_indent_case_labels=1
-let g:vim_markdown_folding_disabled=1
-
 " -------------------------------------------------
 " コーディング
 " -------------------------------------------------

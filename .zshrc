@@ -16,7 +16,7 @@ precmd () { vcs_info }
 PROMPT=[%~]'${vcs_info_msg_0_} $ '
 RPROMPT=''
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-            PROMPT="%F{white}${HOST%%.*}%f ${PROMPT}"
+  PROMPT="%F{white}${HOST%%.*}%f ${PROMPT}"
 
 ## Completion
 #
@@ -49,12 +49,19 @@ bindkey "\\en" history-beginning-search-forward-end
 ## Alias
 #
 case ${OSTYPE} in
-    darwin*)
-        alias ls="ls -G"
-        ;;
-    linux*)
-        alias ls="ls --color=auto"
-        ;;
+  darwin*)
+    alias ls="ls -G"
+    alias ldiff="latexdiff-vc -e utf8 --git --flatten --force -d diff -r HEAD"
+    alias vimcs="vim --servername vim --remote-silent"
+    alias matlab="/Applications/MATLAB_R2016b.app/bin/matlab -nodesktop -nosplash -r \"startup;\""
+  ;;
+  linux*)
+    alias ls="ls --color=auto"
+  ;;
 esac
 
-alias matlab="/Applications/MATLAB_R2016b.app/bin/matlab -nodesktop -nosplash -r \"startup;\""
+## pyenv
+#
+if [ -d ${HOME}/.pyenv ]; then
+  eval "$(pyenv init -)"
+fi

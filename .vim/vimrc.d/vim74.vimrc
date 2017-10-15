@@ -14,15 +14,18 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
+let s:neo_dicts_dir = $HOME.'/.vim/neocomplete'
+if isdirectory(s:neo_dicts_dir)
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'vimshell' : s:neo_dicts_dir.'/.vimshell_hist',
+        \ 'scheme' : s:neo_dicts_dir.'/.gosh_completions',
+        \ 'tex' : s:neo_dicts_dir.'/tex.dict'
         \ }
+endif
 
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 

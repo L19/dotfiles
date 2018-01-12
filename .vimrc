@@ -23,6 +23,8 @@ call dein#add('tpope/vim-surround')
 call dein#add('tyru/open-browser.vim')
 call dein#add('lervag/vimtex')
 call dein#add('itchyny/vim-parenmatch')
+call dein#add('vim-scripts/twilight')
+call dein#add('sjl/badwolf')
 
 call dein#end()
 
@@ -60,6 +62,8 @@ set list listchars=tab:>-,trail:_
 set ambiwidth=double
 set spell
 set spelllang=en,cjk
+hi clear SpellBad
+hi SpellBad cterm=underline,bold
 
 "" 外部grepを使用する
 " set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
@@ -96,18 +100,19 @@ augroup END
 "" Vimfiler
 let g:vimfiler_as_default_explorer=1
 
-""
 "" vimtex
-""
 let g:tex_flavor = "latex"
 
-let g:vimtex_latexmk_enabled = 1
-let g:vimtex_latexmk_options = '-pdfdvi'
+let g:vimtex_compiler_enabled = 1
+let g:vimtex_compiler_options = '-pdfdvi'
+let g:vimtex_compiler_continuous = 1
+let g:vimtex_compiler_background = 1
+let g:vimtex_compiler_callback = 1
 let g:vimtex_view_method = 'general'
 let g:vimtex_view_general_viewer
       \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
-let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
+let g:vimtex_compiler_callback_hooks = ['UpdateSkim']
 function! UpdateSkim(status)
   if !a:status | return | endif
 
@@ -126,15 +131,10 @@ function! UpdateSkim(status)
   endif
 endfunction
 
-let g:vimtex_latexmk_continuous = 1
-let g:vimtex_latexmk_background = 1
-let g:vimtex_latexmk_callback = 1
-
 let g:vimtex_toc_split_pos = "topleft"
 let g:vimtex_toc_width = 10
 
-let g:vimtex_indent_enabled = 0
-
+let g:vimtex_matchparen_enabled = 0
 
 " for neocomplete
 if !exists('g:neocomplete#sources#omni#input_patterns')

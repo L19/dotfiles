@@ -52,7 +52,6 @@ case ${OSTYPE} in
   darwin*)
     alias ls="ls -G"
     alias ldiff="latexdiff-vc -e utf8 --git --flatten --force -d diff -r HEAD"
-    alias vimcs="vim --servername vim --remote-silent"
     alias matlab="/Applications/MATLAB_R2016b.app/bin/matlab -nodesktop -nosplash -r \"startup;\""
   ;;
   linux*)

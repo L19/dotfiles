@@ -1,0 +1,4 @@
+#!/usr/bin/perl
+$latex = 'latex -synctex=1 %S';
+$dvipdf = 'dvipdfmx %S';
+$bibtex = 'bibtex %B';

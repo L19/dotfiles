@@ -1,0 +1,154 @@
+﻿Epoch 4645
+o.d.o.l.ScoreIterationListener - Score at iteration 46440 is 3.886613533001713E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46441 is 2.969041931352091E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46442 is 2.0745195770787914E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46443 is 1.3029580175021185E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46444 is 2.650187441173568E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46445 is 8.449842758486002E-5
+o.d.o.l.ScoreIterationListener - Score at iteration 46446 is 2.7453021375282196E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46447 is 2.8843037923861144E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46448 is 1.9750883134895893E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 46449 is 2.6123958572567415E-4
+
+Epoch 534
+o.d.o.l.ScoreIterationListener - Score at iteration 5330 is 1.9072685210017907E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5331 is 1.2815018696026145E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5332 is 1.7472554360723985E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5333 is 3.9537087795440794E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5334 is 2.2805347400673575E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5335 is 1.8116505705543398E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5336 is 1.782263643391672E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5337 is 2.6352551995893774E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5338 is 2.9384321709086364E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 5339 is 1.3397840719922829E-4
+
+Epoch 7733
+o.d.o.l.ScoreIterationListener - Score at iteration 77320 is 1.3542857414631002E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77321 is 8.880524102385734E-5
+o.d.o.l.ScoreIterationListener - Score at iteration 77322 is 1.788038013407806E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77323 is 7.787591582497496E-5
+o.d.o.l.ScoreIterationListener - Score at iteration 77324 is 6.679764836156535E-5
+o.d.o.l.ScoreIterationListener - Score at iteration 77325 is 1.0973822974958494E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77326 is 1.910507173990832E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77327 is 1.3304279829825234E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77328 is 1.4228637316069837E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 77329 is 1.2551550638819966E-4
+
+---------------------------------------------------------------------------------
+
+Epoch 4187
+o.d.o.l.ScoreIterationListener - Score at iteration 41860 is 3.145820345422384E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41861 is 4.5021435599476464E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41862 is 2.9266943947558576E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41863 is 3.3809416936103235E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41864 is 2.774507933760917E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41865 is 5.63129823730915E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 41866 is 4.277576974025428E-4
+
+---------------------------------------------------------------------------------
+
+Epoch 9999
+o.d.o.l.ScoreIterationListener - Score at iteration 99980 is 2.2463059701236765E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99981 is 1.0473986359496664E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99982 is 2.2971578485774587E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99983 is 1.198975992591737E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99984 is 2.0994147085557412E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99985 is 1.117253133559096E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99986 is 1.1738592262038298E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99987 is 1.5972179445664734E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99988 is 1.0377245179962162E-4
+o.d.o.l.ScoreIterationListener - Score at iteration 99989 is 1.6069639337664804E-4
+=============== Test ===============
+Question 1 : 彼 は どこ に い ます か ？
+Question 2 : 彼 は 何 を 食べ て い ます か ？
+Question 3 : 彼 は どうして 元気 な ん です か ？
+Question 4 : 彼 は どうして 落ち込ん で いる ん です か ？
+Question 5 : 彼 は ゲーム が 好き です か ？
+Question 6 : 彼 は 何 の 教科 が 得意 です か ？
+Question 7 : 彼 の 身長 は いくつ です か ？
+Question 8 : 彼 の 車 は 何 です か ？
+Question 9 : 彼 の スマート フォン は 何 です か ？
+Question 10 : 彼 の お気に入り の 場所 は どこ です か ？
+Question 11 : 彼 に 会っ た こと が あり ます か ？
+Question 12 : 彼女 は 何 を し て い ます か ？
+Question 13 : 彼女 は 誰 が 好き です か ？
+Question 14 : 彼女 は 歌 が うまい です か ？
+Question 15 : 彼女 は どこ に い ます か ？
+Question 16 : 彼女 は どんな 声 です か ？
+Question 17 : 彼女 は どうして 喜ん で いる ん です か ？
+Question 18 : 彼女 の ペット は 何 です か ？
+Question 19 : 彼女 の パソコン は 何 です か ？
+Question 20 : 今日 の 運勢 は 何 です か ？
+Question 21 : 今日 の 天気 は 晴れ です か ？
+Question 22 : 今日 の 気温 は 何 度 です か ？
+Question 23 : 今日 の 日の出 は 何 時 です か ？
+Question 24 : 今日 は 何 時 に 帰り ます か ？
+Question 25 : どうして 彼 は 入院 し て いる ん です か ？
+Question 26 : 雨 が 降っ て き た とき 、 どこ に 彼 は い まし た か ？
+Question 27 : 彼 が 出かけ て いる 間 、 彼女 は なに を し ます か ？
+Question 28 : 明日 、 彼 は どこ へ 出かけ ます か ？
+Question 29 : 彼 は 彼女 の こと を どう 思っ て い ます か ？
+Question 30 : どうして 彼女 に プレゼント を あげ た ん です か ？
+====================================
+Estimated 1 : コンビニ い い い い い
+Estimated 2 : ハンバーガー て て い い い い い い い
+Estimated 3 : 宝くじ が 買え た から です
+Estimated 4 : 宝くじ に に に 負け た から です
+Estimated 5 : ファイナル ファンタジー です
+Estimated 6 : 数学 が 得意 です
+Estimated 7 : センチ です
+Estimated 8 : 度 です
+Estimated 9 : い い い い から
+Estimated 10 : 図書館 です
+Estimated 11 : 家 い あり あり
+Estimated 12 : 家 で て い い い い い い い い い い い い い い い
+Estimated 13 : 内緒 い から い から
+Estimated 14 : 大吉 が
+Estimated 15 : に い い い い い
+Estimated 16 : 宝くじ が 買え た から です
+Estimated 17 : 欲しかっ た バッグ が 買え た から です
+Estimated 18 : センチ です
+Estimated 19 : 内緒 です
+Estimated 20 : 度 です
+Estimated 21 : iphone い い から
+Estimated 22 : 度 です
+Estimated 23 : 時 です
+Estimated 24 : 時 に 帰り い から
+Estimated 25 : コンビニ い て から た た から から た から です
+Estimated 26 : コンビニ で 雨宿り し て い まし た
+Estimated 27 : 本 を 読む 予定 です
+Estimated 28 : 図書館 です
+Estimated 29 : 大事 に 思っ て い ます
+Estimated 30 : 彼女 が 欲し がっ て い た から です
+====================================
+True 1 : 日本 に い ます
+True 2 : ハンバーガー を 食べ て い ます
+True 3 : 宝くじ が 当たっ た から です
+True 4 : 試合 に 負け た から です
+True 5 : ファイナル ファンタジー です
+True 6 : 数学 が 得意 です
+True 7 : センチ です
+True 8 : ホンダ の 車 です
+True 9 : iphone です
+True 10 : 図書館 です
+True 11 : いいえ 、 あり ませ ん
+True 12 : 家 で 寝 て い ます
+True 13 : 内緒 です
+True 14 : はい 、 とても うまい です
+True 15 : 渋谷 に い ます
+True 16 : ハス キー な 声 です
+True 17 : 欲しかっ た バッグ が 買え た から です
+True 18 : チワワ です
+True 19 : macbook です
+True 20 : 大吉 です
+True 21 : いいえ 、 雨 です
+True 22 : 度 です
+True 23 : 時 です
+True 24 : 時 に 帰り ます
+True 25 : 骨折 し て しまっ た から です
+True 26 : コンビニ で 雨宿り し て い まし た
+True 27 : 本 を 読む 予定 です
+True 28 : 図書館 です
+True 29 : 大事 に 思っ て い ます
+True 30 : 彼女 が 欲し がっ て い た から です
+====================================

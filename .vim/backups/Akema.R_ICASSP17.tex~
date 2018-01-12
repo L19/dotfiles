@@ -1,0 +1,331 @@
+% Template for ICASSP-2018 paper; to be used with:
+%          spconf.sty  - ICASSP/ICIP LaTeX style file, and
+%          IEEEbib.bst - IEEE bibliography style file.
+% --------------------------------------------------------------------------
+\documentclass{article}
+\usepackage{spconf,graphicx,bm,amsfonts,amsthm}
+\usepackage[cmex10]{amsmath}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\newtheorem{problem}{Problem}
+\newtheorem{theo}{Theorem}
+\newtheorem{fact}{Fact}
+\newtheorem{defin}{Definition}
+\newtheorem{assum}{Assumption}
+
+% Example definitions.
+% --------------------
+\def\x{{\mathbf x}}
+\def\L{{\cal L}}
+
+% Title.
+% ------
+\title{Non-iterative Joint Diagonalizations\\
+  with a High Dimensional Eigenvalue Problem
+}
+%
+% Single address.
+% ---------------
+\name{Riku Akema, Masao Yamagishi, and Isao Yamada
+  \thanks{Thanks to XYZ agency for funding.}
+}
+\address{Department of Information and Communications Engineering\\
+  Tokyo Institute of Technology, 2-12-1-S3-60 Ookayama, Meguro-ku, Tokyo 152-8550, Japan\\
+  Email: \{akema, myamagi, isao\}@sp.ce.titech.ac.jp
+}
+%
+% For example:
+% ------------
+%\address{School\\
+%	Department\\
+%	Address}
+%
+% Two addresses (uncomment and modify for two-address case).
+% ----------------------------------------------------------
+%\twoauthors
+%  {A. Author-one, B. Author-two\sthanks{Thanks to XYZ agency for funding.}}
+%	{School A-B\\
+%	Department A-B\\
+%	Address A-B}
+%  {C. Author-three, D. Author-four\sthanks{The fourth author performed the work
+%	while at ...}}
+%	{School C-D\\
+%	Department C-D\\
+%	Address C-D}
+%
+\begin{document}
+%\ninept
+%
+\maketitle
+%
+\begin{abstract}
+  We propose a way to extract a solution of the Joint EigenValue Decomposition (JEVD, also called joint diagonalization by similarity) problem from a solution of a high dimensional eigenvalue problem of a specially designed matrix. 
+  Making use of successful non-iterative solvers of eigenvalue problems, we introduce reliable non-iterative algorithms for JEVD which avoid inherent instability of existing iterative algorithms for JEVD based on nonconvex optimization.
+\end{abstract}
+%
+\begin{keywords}
+  Joint diagonalization, Joint eigenvalue decomposition, Blind source separation.
+\end{keywords}
+%
+\section{Introduction}
+\label{sec:intro}
+The Joint EigenValue Decomposition(JEVD) problem, also called joint diagonalization by similarity, of real matrices has been attracted great attention and has diverse applications: blind source separation~\cite{cardoso1993blind,belouchrani1997blind,albera2012ica}, multi-dimensional harmonic retrieval~\cite{haardt1998simultaneous}, and canonical polyadic decomposition~\cite{comon2009tensor,de2004computation,luciani2014canonical}. The JEVD problem of our interest is
+\begin{problem}[JEVD of real matrices]
+  \label{prob: jointDiagProb}
+  Denote $GL_N(\mathbb{R}) \subset \mathbb{R}^{N \times N}$ be the set of all nonsingular matrices. Let $\{R_{\tau}\}_{\tau=1}^{T}\subset \mathbb{R}^{N\times N}$ be a family of (possibly unsymmetric) matrices. Find $M_{\star} \in GL_N(\mathbb{R})$ such that $M_{\star}^{-1}R_{\tau}M_{\star}$ is diagonal for any $\tau=1,2,\ldots ,T$.
+\end{problem}
+%The target of Problem \eqref{prob: jointDiagProb} includes a family of unsymmetric matrices, so that 
+
+Algorithmic solutions of Problem \ref{prob: jointDiagProb} are based on iterative minimization of a non-convex problem
+\begin{equation}
+  \label{prob: non-convexOptProb}
+  \underset{\hat{M}\in GL_N(\mathbb{R})}{\operatorname{minimize}}\  \sum_{\tau = 1}^{T}\sum_{i,j=1,i\neq j}^{N}\left(\left[\hat{M}^{-1} R_\tau \hat{M}\right]_{i, j}\right)^2:
+\end{equation}
+"sh-rt" algorithm ~\cite{fu2006simultaneous} combining a shear and unitary transformation, JDTM algorithm~\cite{luciani2010joint} improving both the estimation accuracy of diagonalizer and the convergence rate by changing an update criterion of "sh-rt", and, on the other hand, JDTE algorithm~\cite{andre2015fast} based on the Taylor expansion. However, due to non-convexity of the optimization problem, these iterative algorithms may converge to (possibly unreliable) local minima depending on their initial values~\cite{colombo2016global}.
+
+In this paper, to find a reliable solution of Problem \ref{prob: jointDiagProb}, we propose new non-iterative algorithms for JEVD with a high dimensional eigenvalue problem. 
+These algorithms are based on a newly derived necessary condition of all solutions of Problem \ref{prob: jointDiagProb} (Theorem \ref{theo: JDviaED}): for each column vector $\bm{m}_i$ of a solution $M$ of JEVD, $\operatorname{vec}(\bm{m}_i\bm{m}_i^{\top})$ must be an eigenvectors of a high dimensional matrix $Q\in\mathbb{R}^{N^{2}\times N^{2}}$ constructed from all $\{R_{\tau}\}_{\tau=1}^{T}$.
+Making use of non-iterative solvers to eigenvalue problems, we establish new non-iterative algorithms which provide an exact solution of Problem \ref{prob: jointDiagProb} under a certain condition on eigenvalues of $Q$.
+
+{\small
+  {\bf Notation:} Let $\mathbb{R}$ and $GL_N(\mathbb{R})$ denote the set of all real numbers and the set of all nonsingular matrices which are in $\mathbb{R}^{N\times N}$, respectively. 
+  Denote columnwise vectorization of a matrix by ${\rm vec}(\cdot)\colon \mathbb{R}^{N \times N} \to \mathbb{R}^{N^2}$ and its inversion by ${\rm vec}^{-1}(\cdot)$.
+  For a matrix, $\| \cdot \|_{F}$ is the Frobenius norm, $\| \cdot \|_\ast$ is the nuclear norm (i.e., sum of the singular values), and $\|\cdot\|_{2}$ is 2-norm (i.e., the largest singular value).
+  For a square matrix $R \in \mathbb{R}^{N \times N}$, an eigenvalue of $R$ is called \emph{simple} if its algebraic multiplicity is one.
+  A square matrix $R \in \mathbb{R}^{N \times N}$ is called diagonalizable if there exists $M\in GL_N(\mathbb{R})$ such that $M^{-1} R M$ is diagonal. 
+  A family $\mathcal{F} \subset \mathbb{R}^{N \times N}$ of matrices is said to be diagonalizable if $A$ is diagonalizable for any $A \in \mathcal{F}$. A family $\mathcal{F} \subset \mathbb{R}^{N \times N}$ is said to be commute if $AB = BA$ for any $A,B \in \mathcal{F}$.
+}
+
+
+\section{Preliminaries}
+\label{sec:preli}
+We shall list some known results on properties on solutions of Problem \ref{prob: jointDiagProb}.
+
+\begin{defin}
+  A family $\mathcal{F} \subset \mathbb{R}^{N \times N}$ is said to be simultaneous diagonalizable if there is a single nonsingular $M \in GL_N(\mathbb{R})$ such that  $M^{-1} R M$ is diagonal for every $R \in \mathcal{F}$.
+\end{defin}
+\begin{fact}[Existence of solutions of Problem \ref{prob: jointDiagProb}]
+  \label{fa:existence}
+  Suppose that $\{R_{\tau}\}_{\tau=1}^{T}\subset \mathbb{R}^{N\times N}$ in Problem \ref{prob: jointDiagProb} is diagonalizable. Then the following conditions are equivalent:
+  \begin{itemize}
+    \item[(a)] Problem \ref{prob: jointDiagProb} has a solution;
+    \item[(b)] $\{R_{\tau}\}_{\tau=1}^{T}$ is a simultaneous diagonalizable family;
+    \item[(c)] $\{R_{\tau}\}_{\tau=1}^{T}$ is a commuting family.
+  \end{itemize}  
+\end{fact}
+Note that Fact \ref{fa:existence} is an immediate consequence by ~\cite[Theorem 1.3.21]{horn2012matrix}.
+
+Obviously, if $M$ is a solution of Problem \ref{prob: jointDiagProb}, then $M \Pi D$ is also another solution for any permutation $\Pi \in \mathbb{R}^{N \times N}$ and any non-singular diagonal $D \in \mathbb{R}^{N\times N}$. 
+Hence any solution $M$ of Problem \ref{prob: jointDiagProb} can be unique only up to a permutation and a scaling of its columns. 
+\begin{fact}[{On essential uniqueness of solutions of Problem \ref{prob: jointDiagProb} ~\cite[Theorem 6.1]{de2004computation}}]
+  Suppose that $M \in GL_N(\mathbb{R})$ is a solution of Problem \ref{prob: jointDiagProb}. 
+  Then the joint eigenvalue decomposition
+  \begin{align}
+    (\forall \tau= 1,2,\ldots, T) \quad M^{-1} R_{\tau} M & \  =: \Sigma_{\tau} \label{eq: JEDL} \\
+                                                          & \ =\operatorname{diag}(\sigma_1^{(\tau)}, \sigma_2^{(\tau)}, \ldots  \sigma_N^{(\tau)}) \nonumber
+  \end{align}
+  is unique up to a permutation and a scaling of its column if and only if
+  \begin{align}
+    (\forall i \neq j,\ i, j = 1, 2, \ldots , N)(\exists \tau \in \{1, 2, \ldots , T\}) \ \sigma_i^{(\tau)} \neq \sigma_j^{(\tau)}
+  \end{align}
+\end{fact}
+
+
+\section{Main Results}
+\label{sec:main}
+Establishing a non-iterative algorithm solves an unreliability of iterative algorithms fundamentally.
+To do so, we shall reduce Problem \ref{prob: jointDiagProb} to a problem to finding eigenvectors of a single matrix in a high dimensional space in Sect. \ref{ssec: hd}, which makes use of non-iterative algorithms to eigenvalue problems possible as algorithms to Problem \ref{prob: jointDiagProb}.
+
+\subsection{High Dimensional Eigenvalue Problem for JEVD}
+\label{ssec: hd}
+\begin{theo}[Necessary condition of all solutions of Problem \ref{prob: jointDiagProb}]
+  \label{theo: JDviaED}
+  Suppose that $M\in\mathbb{R}^{N\times N}$ is a solution of Problem \ref{prob: jointDiagProb}.
+  For $\{R_{\tau}\}_{\tau=1}^{T}\subset \mathbb{R}^{N\times N}$ in Problem \ref{prob: jointDiagProb}, define matrices
+  \begin{align}	    
+    \hat{R}_{k}:=\left[
+      \begin{array}{cccc}
+        {[R_1]}_{k,1} & {[R_1]}_{k,2} & \cdots & {[R_1]}_{k,N}\\
+        {[R_2]}_{k,1} & {[R_2]}_{k,2} & \cdots & {[R_2]}_{k,N}\\
+                       & \vdots & & \\
+        {[R_\tau]}_{k,1} & {[R_\tau]}_{k,2} & \cdots & {[R_\tau]}_{k,N}\\
+                          & \vdots & & \\
+        {[R_T]}_{k,1} & {[R_T]}_{k,2} & \cdots & {[R_T]}_{k,N}
+      \end{array}
+    \right]\in & \ \mathbb{R}^{T\times N}  \nonumber  \\
+    (k = 1, 2, \ldots , N), \label{eq: Rhat} & 
+  \end{align}
+  \begin{equation}
+    \label{eq: Q}
+    Q:=\left[
+      \begin{array}{c}
+        {\rm vec}(\hat{R}_{1}^\top\hat{R}_{1})^\top\\
+        {\rm vec}(\hat{R}_{2}^\top\hat{R}_{1})^\top\\
+        \vdots\\
+        {\rm vec}(\hat{R}_{N}^\top\hat{R}_{1})^\top\\
+        {\rm vec}(\hat{R}_{1}^\top\hat{R}_{2})^\top\\
+        {\rm vec}(\hat{R}_{2}^\top\hat{R}_{2})^\top\\
+        \vdots\\
+        {\rm vec}(\hat{R}_{N}^\top\hat{R}_{N})^\top
+      \end{array}
+    \right]\in\mathbb{R}^{N^2\times N^2}.
+  \end{equation}         
+  Then, $Q$ has eigen-pairs such that 
+  \begin{align}
+    \label{eq: eigenpair}
+    (\lambda_{i,j}, \bm{v}_{i,j})&:=\left(\sum_{\tau=1}^T\sigma_i^{(\tau)}\sigma_j^{(\tau)}, {\rm vec}(\bm{m}_{i}\bm{m}_{j}^{\top})\right)\\
+    \label{eq: eigenvalueEquality}      
+    &=(\lambda_{j,i}, \bm{v}_{i,j})\in\mathbb{R}\times\mathbb{R}^{N^2} \\
+    & \hspace{2.5cm}(i,j=1,2,\ldots ,N), \nonumber
+  \end{align}
+  where $\bm{m}_{i}\in\mathbb{R}^{N}$ is the $i$-th column vector of $M$ and $\sigma_1^{(\tau)},\sigma_2^{(\tau)},\ldots , \sigma_N^{(\tau)}$ are the eigenvalues of $R_\tau$ defined as in \eqref{eq: JEDL}.
+\end{theo}
+
+Eigenvectors $\bm{v}_{i,j}$ in \eqref{eq: eigenpair} of $Q$ have special properties:
+\begin{itemize}
+  \item [(a)] ${\rm rank}({\rm vec}^{-1}(\bm{v}_{i,j}))={\rm rank}(\bm{m}_i\bm{m}_j^\top)=1$ for any $i,j=1,2,\ldots ,N$;
+  \item [(b)] ${\rm vec}^{-1}(\bm{v}_{i,j})=\bm{m}_i\bm{m}_j^\top$ is unsymmetric for any $i,j=1,2,\ldots ,N\colon i \not = j$;
+  \item [(c)] ${\rm vec}^{-1}(\bm{v}_{i,i})=\bm{m}_i\bm{m}_i^\top$ is symmetric for any $i=1,2,\ldots ,N$;
+  \item [(d)] the principal component of ${\rm vec}^{-1}(\bm{v}_{i,i})$ is proportional to $\bm{m}_{i}$ for any $i=1,2,\ldots ,N$.
+\end{itemize}
+These imply that, from $\bm{v}_{i,i}$, we can extract the $i$-th column $\bm{m}_i$ of a solution $M$ of Problem \ref{prob: jointDiagProb} by computing the principal component of ${\rm vec}^{-1}(\bm{v}_{i,i})$.
+This idea yields our proposed algorithm comprising three procedures: (i) obtain all the eigenvectors $\hat{\bm{v}}_\iota\in\mathbb{R}^{N^2}(\iota=1,2,\ldots ,N^2)$ of $Q$;
+(ii) search eigenvectors $\{\tilde{\bm{v}}_{\iota'}\}_{\iota'=1}^N$ idential to desired ones $\{\bm{v}_{i,i}\}_{i=1}^N$ based on properties (c) and (a);
+(iii) recovering all columns of $M$ from the principal component of ${\rm vec}^{-1}(\tilde{\bm{v}}_{\iota'})$ by property (d)
+(see Algorithm 1 for its detailed steps).
+
+Though eigenvectors $\{\hat{\bm{v}}_\iota\}_{\iota=1}^{N^2}$ of $Q$ may not preserve the above special properties (a-d) in a situation where $\{R_{\tau}\}_{\tau=1}^{T}\subset \mathbb{R}^{N\times N}$ is only available with noise, we can expect that
+\begin{itemize}
+  \item [(a')] An approximation
+    $\frac{\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_{\ast}}{\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_{2}}$ of  
+    ${\rm rank}({\rm vec}^{-1}(\bm{v}_{\iota}))$ is close to $1$ (see Remark 1 below),
+  \item [(c')] ${\rm vec}^{-1}(\hat{\bm{v}}_{\iota})$ is close to symmetric, i.e.,
+    \begin{align*}
+      \left\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})-({\rm vec}^{-1}(\hat{\bm{v}}_{\iota}))^\top\right\|_F \text{ is small.}
+    \end{align*}
+\end{itemize}
+
+Based on the properties (a') and (c'), we propose Algorithm \ref{algo: proposed2} by replacing Step 2 in Algorithm 1 by an optimization problem w.r.t. the index set $\mathcal{I}_N \subset \{1, 2, \ldots , N^2\}$ of size $N$:
+\begin{align*}
+  \label{eq: eigenvectorCond2}
+  \underset{\mathcal{I}_N\subset\{1,2,\ldots ,N^2\}}{\operatorname{minimize}}\ & \sum_{\iota\in\mathcal{I}_N} \left( \frac{\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_\ast}{ \|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_{2}}\right.\nonumber\\
+                                                                               & \left. + \rho \left\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})-({\rm vec}^{-1}(\hat{\bm{v}}_{\iota}))^\top\right\|_F \right)
+\end{align*}
+to search a tuple of eigenvectors satisfying properties (a') and (b').
+
+\noindent {\bf Remark 1:}
+The nuclear norm is the best convex approximation of the rank function over the unit ball of matrices
+with $\| \cdot\|_2$ less than one (see ~\cite{fazel2002matrix,recht2010guaranteed,gandy2010convex,candes2011robust} for details). Along this fact, we utilize the quotient $\|\cdot \|_{\ast}/\|\cdot\|_{2}$ as a relaxation of $\operatorname{rank}(\cdot)$.
+
+\begin{algorithm}[t]
+  \caption{for Problem \ref{prob: jointDiagProb} in the noiseless case}
+  \label{algo: proposed}
+  \begin{description}
+    \item [Step 0.] Let $\hat{R}_{k} \in \mathbb{R}^{T \times N}(k = 1, 2, \ldots , N)$ be matrices
+      \begin{align*}
+        \hat{R}_{k}:=\left[
+          \begin{array}{cccc}
+            {[R_1]}_{k,1} & {[R_1]}_{k,2} & \cdots & {[R_1]}_{k,N}\\
+            {[R_2]}_{k,1} & {[R_2]}_{k,2} & \cdots & {[R_2]}_{k,N}\\
+                           & \vdots & & \\
+            {[R_\tau]}_{k,1} & {[R_\tau]}_{k,2} & \cdots & {[R_\tau]}_{k,N}\\
+                              & \vdots & & \\
+            {[R_T]}_{k,1} & {[R_T]}_{k,2} & \cdots & {[R_T]}_{k,N}
+          \end{array}
+        \right]
+      \end{align*}
+      with $\{R_{\tau}\}_{\tau=1}^{T}\subset \mathbb{R}^{N\times N}$ in Problem \ref{prob: jointDiagProb}; \\
+      and then construct 
+      \begin{equation*}
+        Q=\left[
+          \begin{array}{c}
+            {\rm vec}(\hat{R}_{1}^\top\hat{R}_{1})^\top\\
+            {\rm vec}(\hat{R}_{2}^\top\hat{R}_{1})^\top\\
+            \vdots\\
+            {\rm vec}(\hat{R}_{N}^\top\hat{R}_{1})^\top\\
+            {\rm vec}(\hat{R}_{1}^\top\hat{R}_{2})^\top\\
+            {\rm vec}(\hat{R}_{2}^\top\hat{R}_{2})^\top\\
+            \vdots\\
+            {\rm vec}(\hat{R}_{N}^\top\hat{R}_{N})^\top
+          \end{array}
+        \right]\in\mathbb{R}^{N^2\times N^2}.
+      \end{equation*}
+    \item [Step 1.] Obtain eigenvectors $\hat{\bm{v}}_\iota\in\mathbb{R}^{N^2}(\iota=1,2,\ldots ,N^2)$ of $Q$.
+    \item [Step 2.] Search $N$ eigenvectors $\{\tilde{\bm{v}}_{\iota'}\}_{\iota'=1}^N$ of $Q$ such that 
+      $$
+      \left\{
+        \begin{array}{l}
+          {\rm vec}^{-1}(\tilde{\bm{v}}_{\iota'}) \text{ is symmetric,}\\
+          {\rm rank}({\rm vec}^{-1}(\tilde{\bm{v}}_{\iota'})) = 1.
+        \end{array}
+      \right.
+      $$
+    \item [Step 3.]Construct $M$ by computing the principal components of ${\rm vec}^{-1}(\tilde{\bm{v}}_{\iota'})$ ($\iota'=1,2,\ldots, N$).
+  \end{description}    
+\end{algorithm}
+
+\begin{algorithm}[t]
+  \caption{for Problem \ref{prob: jointDiagProb} in the presence of noise}
+  \label{algo: proposed2}
+  \begin{description}
+    \item [Steps 0--1.] Same as Algorithm \ref{algo: proposed}.
+    \item [Step 2.] Explore the index set $\mathcal{I}_N$ of size $N$ by solving  
+      \begin{align*}
+        \label{eq: eigenvectorCond2}
+        \underset{\mathcal{I}_N\subset\{1,2,\ldots ,N^2\}}{\operatorname{minimize}}\ & \sum_{\iota\in\mathcal{I}_N} \left( 
+        \frac{\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_\ast}{ \|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})\|_{2}} \right.\nonumber\\
+        & \left. + \rho \left\|{\rm vec}^{-1}(\hat{\bm{v}}_{\iota})-({\rm vec}^{-1}(\hat{\bm{v}}_{\iota}))^\top\right\|_F \right)
+      \end{align*}
+      with $ \rho \ge 0$
+    \item [Step 3.]  Same as Algorithm \ref{algo: proposed}.
+  \end{description}    
+\end{algorithm}
+
+
+
+
+
+\subsection{Sufficient Condition for Algorithm \ref{algo: proposed} to Solve Problem \ref{prob:  jointDiagProb}}
+In an extremely pessimistic view, Algorithm 1 does not necessarily find a solution of Problem \ref{prob: jointDiagProb}. 
+In fact, eigenvectors $\{\hat{\bm{v}}_\iota\}_{\iota=1}^{N^2}$ obtained in Step 1 of Algorithm \ref{algo: proposed} may not include desired eigenvectors $\{\bm{v}_{i,i}\}_{i=1}^N$. 
+For example, if the two eigenvalues $\lambda_{1,1},\lambda_{2,2}$ in \eqref{eq: eigenpair} of $Q$ coincides, i.e., $\lambda_{1,1}=\lambda_{2,2}$, 
+\begin{align}
+  (\forall (\alpha_1,\alpha_2) \in \mathbb{R}^2\setminus \{(0,0)\}) \quad \alpha_1\bm{v}_{1,1}+\alpha_2\bm{v}_{2,2}
+\end{align}
+is also an eigenvector of $Q$. 
+Hence there is a possibility that $\hat{\bm{v}}_1=\bm{v}_{1,1}+\bm{v}_{2,2}$ and $\hat{\bm{v}}_2=\bm{v}_{1,1}-\bm{v}_{2,2}$ hold. 
+(note: the two matrices $\operatorname{vec}^{-1}(\bm{v}_{1,1}+\bm{v}_{2,2})$ and $\operatorname{vec}^{-1}(\bm{v}_{1,1}-\bm{v}_{2,2})$ are of rank $2$). In such a rare situation, Algorithm 1 does not necessarily find a solution of Problem \ref{prob: jointDiagProb} because of failure in finding $N$ special eigenvectors of $Q$ in Step 2 of Algorithm \ref{algo: proposed}.
+
+Paradoxically, if each of desired eigenvectors $\{\bm{v}_{i,i}\}_{i=1}^N$ corresponds to a simple eigenvalue, the above rare situation can be avoided. Since $\lambda_{i,j}=\lambda_{j,i}$ from \eqref{eq: eigenvalueEquality} implies that eigenvectors $\bm{v}_{i,j}$ ($i,j=1,2,\ldots ,N\colon i \not = j$) must correspond to non-simple eigenvalues, the equivalence
+\begin{align*}
+  & (\text{$Q$ has $N$ simple eigenvalues})  \\
+  \Leftrightarrow & \ (\text{each of $\{\bm{v}_{i,i}\}_{i=1}^N$ corresponds to a simple eigenvalue})
+\end{align*}
+holds. Consequently, we establish the following theorem.
+\begin{theo}[Sufficient condition for Algorithm \ref{algo: proposed} to Solve Problem \ref{prob: jointDiagProb}]
+  \label{theo: algorithmAssumption}
+  Assume that Problem \ref{prob: jointDiagProb} has a solution.
+  Suppose that the matrix $Q\in\mathbb{R}^{N^{2}\times N^{2}}$ defined as in Theorem \ref{theo: JDviaED} has $N$ simple eigenvalues. Then 
+  Algorithm 1 solves Problem \ref{prob: jointDiagProb}.
+\end{theo}
+We emphasize that the condition that $Q$ has $N$ simple eigenvalues holds almost always. 
+
+
+\section{Numerical Experiments}
+\label{sec:exam}
+test
+
+\section{Conclusion}
+\label{sec:conclision}
+We have discovered a way to construct, from the solution of the high dimensional eigenvalue problem of $Q \in \mathbb{R}^{N^2 \times N^2}$, a solution of the JEVD problem, which can be used as a key strategy for general JEVD problem. Based on this discovery, we proposed non-iterative algorithms which produce a reliable estimate of diagonalizers compared with existing iterative algorithms. As a future work, we will investigate reliabilities of the proposed algorithms by numerical experiments and apply to the JVED applications e.g. blind source separation.
+
+
+% References should be produced using the bibtex program from suitable
+% BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
+% style file from IEEE produces unsorted bibliography list.
+% -------------------------------------------------------------------------
+\bibliographystyle{IEEEbib}
+\bibliography{refs}
+
+\end{document}

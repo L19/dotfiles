@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{bm}
+\usepackage[cmex10]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\title{Joint Eigenvalue Decomposition}
+\author{Riku Akema}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+
+\section{Optimality Condition for a Minimizer of the Off-diagonal Cost Function}
+\label{sec:optimality}
+For given $T$ matrices $\{R_\tau\} \subset \mathbb{R}^{N \times N}$, we consider the following problem:
+\begin{align}
+  \underset{M \in GL_N(\mathbb{R})}{\operatorname{minimize}}\ \sum_{\tau = 1}^T
+  \|\mathrm{off}(M^{-1}R_\tau M)\|^2_F,
+\end{align}
+where $\mathrm{off}:\mathbb{R}^{N \times N} \rightarrow \mathbb{R}^{N \times N}:X \mapsto X - \mathrm{diag}(X)$.
+From continuity of polynomial roots, there exists a some sufficiently small $\varepsilon > 0$ 
+s.t. $B_N(M, \varepsilon) \subset GL_N(\mathbb{R})$. Since for any $\epsilon \in B_N(O,
+\varepsilon):\|M^{-1} \epsilon\|_2 < 1$, Neumann series provides
+\begin{align}
+  (M + \epsilon)^{-1} & = (I_N + M^{-1}\epsilon)^{-1}M^{-1} \nonumber \\
+                      & = \left(I_N - M^{-1}\epsilon - \sum_{n = 2}^\infty (M^{-1}\epsilon)^n \right)M^{-1} \nonumber \\
+  \label{eq:neumann}
+                      & = M^{-1} - M^{-1}\epsilon M^{-1} - o(\epsilon). 
+\end{align}
+Define $f_\tau:\mathbb{R}^{N \times N} \rightarrow \mathbb{R}:M \mapsto \|\mathrm{off}(M^{-1}R_\tau M)\|^2_F\ 
+(\tau = 1, 2, \ldots ,T)$ Then \eqref{eq:neumann} results in for each $\tau = 1, 2, \ldots T$
+\begin{align}
+  f_\tau (M + \epsilon) & = \|\mathrm{off}\left((M + \epsilon)^{-1}R_\tau (M + \epsilon)\right)\|^2_F \nonumber \\
+                        & = \|\mathrm{off}\left((M^{-1} - M^{-1}\epsilon M^{-1} - o(\epsilon))R_\tau (M + \epsilon)\right) \nonumber \\
+                        & = \| \|
+\end{align}
+
+\end{document}

@@ -1,1 +1,4 @@
 .vim/dein/
+.vim/backups
+.vim/swapfiles
+

@@ -1,5 +1,0 @@
-%%  startup.m
-%   Last update: 2017/10/21
-
-addpath(genpath('/Users/l19/Documents/MATLAB'));
-

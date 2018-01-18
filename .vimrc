@@ -47,6 +47,7 @@ endif
 
 set showmatch
 set hlsearch
+set cursorline
 set number
 set tabstop=2
 set expandtab

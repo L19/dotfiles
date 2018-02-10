@@ -53,6 +53,7 @@ case ${OSTYPE} in
     alias ls="ls -G"
     alias ldiff="latexdiff-vc -e utf8 --git --flatten --force -d diff -r HEAD"
     alias matlab="/Applications/MATLAB_R2016b.app/bin/matlab -nodesktop -nosplash -r \"startup;\""
+    alias mvim="mvim --remote-tab-silent"
   ;;
   linux*)
     alias ls="ls --color=auto"

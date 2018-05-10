@@ -74,6 +74,37 @@ let g:sh_indent_case_labels=1
 let g:vim_markdown_folding_disabled=1
 let g:loaded_matchparen = 1
 
+"" ステータスライン
+set statusline=%F
+" これ以降は右寄せ表示
+set statusline+=%=
+" file encoding
+set statusline+=[ENC=%{&fileencoding}]
+" 現在行数/全行数
+set statusline+=[LOW=%l/%L]
+
+" let g:word_count="<unknown>"
+" fun! WordCount()
+"     return g:word_count
+" endfun
+" fun! UpdateWordCount()
+"     let s = system("wc -w ".expand("%p"))
+"     let parts = split(s, ' ')
+"     if len(parts) > 1
+"         let g:word_count = parts[0]
+"     endif
+" endfun
+" augroup WordCounter
+"     au! CursorHold * call UpdateWordCount()
+"     au! CursorHoldI * call UpdateWordCount()
+" augroup END
+" " how eager are you? (default is 4000 ms)
+" set updatetime=500
+" " modify as you please...
+" set statusline+=%{WordCount()}\ words
+set laststatus=2
+
+
 " -------------------------------------------------
 " コーディング
 " -------------------------------------------------

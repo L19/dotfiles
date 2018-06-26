@@ -65,3 +65,9 @@ esac
 if [ -d ${HOME}/.pyenv ]; then
   eval "$(pyenv init -)"
 fi
+
+## nvm
+#
+if [ -d ${HOME}/.nvm ]; then
+  source $(brew --prefix nvm)/nvm.sh
+fi

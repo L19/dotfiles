@@ -10,4 +10,8 @@ if [ -d ${HOME}/.pyenv ]; then
   export PATH="${PYENV_ROOT}/bin:${PATH}"
 fi
 
+if [ -d ${HOME}/.nvm ]; then
+  export NVM_DIR=~/.nvm
+fi
+
 export LSCOLORS=xbfxcxdxbxegedabagacad

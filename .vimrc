@@ -131,6 +131,7 @@ augroup END
 
 "" Vimfiler
 let g:vimfiler_as_default_explorer=1
+autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
 
 "" vimtex
 let g:tex_flavor = "latex"

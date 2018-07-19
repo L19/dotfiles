@@ -184,6 +184,11 @@ endif
 let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
 let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
 
+" Unite
+let g:unite_enable_start_insert=1
+let g:unite_source_history_yank_enable =1
+let g:unite_source_file_mru_limit = 200
+
 " ----------------------------------------------------
 " キーバインド
 " ----------------------------------------------------
@@ -219,8 +224,11 @@ nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap sy :<C-u>Unite history/yank<CR>
+nnoremap sb :<C-u>Unite buffer<CR>
+nnoremap sf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap srr :<C-u>Unite -buffer-name=register register<CR>
+nnoremap su :<C-u>Unite file_mru buffer<CR>
 nnoremap <ESC><ESC> :nohlsearch<CR>
 vnoremap < <gv
 vnoremap > >gv

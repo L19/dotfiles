@@ -13,6 +13,7 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
 call dein#begin(expand('~/.vim/dein'))
 
+call dein#add('altercation/vim-colors-solarized')
 call dein#add('kannokanno/previm')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('Shougo/dein.vim')
@@ -65,6 +66,8 @@ set spell
 set spelllang=en,cjk
 hi clear SpellBad
 hi SpellBad cterm=underline,bold
+set formatoptions+=mM
+set textwidth=80
 
 "" 外部grepを使用する
 " set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
@@ -104,6 +107,8 @@ set statusline+=[LOW=%l/%L]
 " set statusline+=%{WordCount()}\ words
 set laststatus=2
 
+" let &colorcolumn=join(range(81,999),",")
+" hi ColorColumn ctermbg=235 guibg=#2c2d27
 
 " -------------------------------------------------
 " コーディング
@@ -131,25 +136,27 @@ augroup END
 
 "" Vimfiler
 let g:vimfiler_as_default_explorer=1
-autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" autocmd VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+nnoremap <silent> <Leader>z :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -toggle -no-quit<CR>
 
 "" vimtex
 let g:tex_flavor = "latex"
-
 " let g:vimtex_view_method = 'skim'
-let g:vimtex_compiler_latexmk = {
-        \ 'background' : 1,
-        \ 'build_dir' : '',
-        \ 'callback' : 1,
-        \ 'continuous' : 1,
-        \ 'options' : [
-        \   '-pdfdvi',
-        \   '-verbose',
-        \   '-file-line-error',
-        \   '-synctex=1',
-        \   '-interaction=nonstopmode',
-        \ ],
-        \}
+" let g:vimtex_compiler_latexmk = {
+"         \ 'background' : 1,
+"         \ 'build_dir' : '',
+"         \ 'callback' : 1,
+"         \ 'continuous' : 1,
+"         \ 'options' : [
+"         \   '-pdfdvi',
+"         \   '-verbose',
+"         \   '-file-line-error',
+"         \   '-synctex=1',
+"         \   '-interaction=nonstopmode',
+"         \ ],
+"         \}
+let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
 let g:vimtex_view_general_viewer
       \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
@@ -171,18 +178,17 @@ function! UpdateSkim(status)
     call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
   endif
 endfunction
-" 
 " let g:vimtex_toc_split_pos = "topleft"
 " let g:vimtex_toc_width = 10
-
 let g:vimtex_matchparen_enabled = 0
+autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
 
 " for neocomplete
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
-let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
+" let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
+" let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
 
 " Unite
 let g:unite_enable_start_insert=1

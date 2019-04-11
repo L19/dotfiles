@@ -4,16 +4,17 @@ bindkey -v
 
 ## Prompt
 #
-autoload -Uz vcs_info
-setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-zstyle ':vcs_info:*' formats "%F{green}%u%c[%b]%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
-precmd () { vcs_info }
-
-PROMPT=[%~]'${vcs_info_msg_0_} $ '
+# autoload -Uz vcs_info
+# setopt prompt_subst
+# zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+# zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+# zstyle ':vcs_info:*' formats "%F{green}%u%c[%b]%f"
+# zstyle ':vcs_info:*' actionformats '[%b|%a]'
+# precmd () { vcs_info }
+# 
+# PROMPT=[%~]'${vcs_info_msg_0_} $ '
+PROMPT=[%~]' '
 RPROMPT=''
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
   PROMPT="%F{white}${HOST%%.*}%f ${PROMPT}"
@@ -52,8 +53,8 @@ case ${OSTYPE} in
   darwin*)
     alias ls="ls -G"
     alias ldiff="latexdiff-vc -e utf8 --git --flatten --force -d diff -r HEAD"
-    alias matlab="/Applications/MATLAB_R2016b.app/bin/matlab -nodesktop -nosplash -r \"startup;\""
-    alias mvim="mvim --remote-tab-silent"
+    alias matlab="/Applications/MATLAB_R2017a.app/bin/matlab -nodesktop
+      -r \"startup;\""
   ;;
   linux*)
     alias ls="ls --color=auto"

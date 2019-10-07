@@ -14,6 +14,7 @@ let &runtimepath = s:dein_repo_dir .",". &runtimepath
 call dein#begin(expand('~/.vim/dein'))
 
 call dein#add('altercation/vim-colors-solarized')
+" call dein#add('davidhalter/jedi-vim')
 call dein#add('kannokanno/previm')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('Shougo/dein.vim')
@@ -26,6 +27,8 @@ call dein#add('lervag/vimtex')
 call dein#add('itchyny/vim-parenmatch')
 call dein#add('vim-scripts/twilight')
 call dein#add('sjl/badwolf')
+
+" call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 call dein#end()
 
@@ -48,7 +51,7 @@ endif
 
 set showmatch
 set hlsearch
-" set cursorline
+set cursorline
 set number
 set tabstop=2
 set expandtab
@@ -67,7 +70,7 @@ set spelllang=en,cjk
 hi clear SpellBad
 hi SpellBad cterm=underline,bold
 set formatoptions+=mM
-set textwidth=80
+set textwidth=0
 
 "" 外部grepを使用する
 " set grepformat=%f:%l:%m,%f:%l%m,%f\ \ %l%m,%f
@@ -84,27 +87,7 @@ set statusline+=%=
 " file encoding
 set statusline+=[ENC=%{&fileencoding}]
 " 現在行数/全行数
-set statusline+=[LOW=%l/%L]
-
-" let g:word_count="<unknown>"
-" fun! WordCount()
-"     return g:word_count
-" endfun
-" fun! UpdateWordCount()
-"     let s = system("wc -w ".expand("%p"))
-"     let parts = split(s, ' ')
-"     if len(parts) > 1
-"         let g:word_count = parts[0]
-"     endif
-" endfun
-" augroup WordCounter
-"     au! CursorHold * call UpdateWordCount()
-"     au! CursorHoldI * call UpdateWordCount()
-" augroup END
-" " how eager are you? (default is 4000 ms)
-" set updatetime=500
-" " modify as you please...
-" set statusline+=%{WordCount()}\ words
+set statusline+=[ROW=%l/%L]
 set laststatus=2
 
 " let &colorcolumn=join(range(81,999),",")
@@ -113,13 +96,11 @@ set laststatus=2
 " -------------------------------------------------
 " コーディング
 " -------------------------------------------------
-"" 自動的に閉じる
-" imap { {}<LEFT>
-" imap [ []<LEFT>
-" imap ( ()<LEFT>
-
 "" カーソル位置を保存する
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" if has("autocmd")
+"   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
+"         \ exe "normal g`\"" | endif
+" endif
 
 "" 線を引く
 inoreabbrev <expr> dl repeat('*', 80 - col('.'))
@@ -142,20 +123,6 @@ nnoremap <silent> <Leader>z :<C-u>VimFilerBufferDir -split -simple -winwidth=30 
 
 "" vimtex
 let g:tex_flavor = "latex"
-" let g:vimtex_view_method = 'skim'
-" let g:vimtex_compiler_latexmk = {
-"         \ 'background' : 1,
-"         \ 'build_dir' : '',
-"         \ 'callback' : 1,
-"         \ 'continuous' : 1,
-"         \ 'options' : [
-"         \   '-pdfdvi',
-"         \   '-verbose',
-"         \   '-file-line-error',
-"         \   '-synctex=1',
-"         \   '-interaction=nonstopmode',
-"         \ ],
-"         \}
 let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
 let g:vimtex_view_general_viewer
       \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
@@ -183,6 +150,7 @@ endfunction
 let g:vimtex_matchparen_enabled = 0
 autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
 
+
 " for neocomplete
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
@@ -195,6 +163,17 @@ let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable =1
 let g:unite_source_file_mru_limit = 200
 
+" jedi-vim
+set completeopt=menuone                        " 補完候補を呼び出すとき常にポップアップメニューを使う
+autocmd! User jedi-vim call s:jedivim_hook()   " vim-plugの遅延ロード呼び出し
+function! s:jedivim_hook()              " jedi-vimを使うときだけ呼び出す処理を関数化
+  let g:jedi#auto_initialization    = 0 " 自動で実行される初期化処理を無効
+  let g:jedi#auto_vim_configuration = 0 " 'completeopt' オプションを上書きしない
+  let g:jedi#popup_on_dot           = 0 " ドット(.)を入力したとき自動で補完しない
+  let g:jedi#popup_select_first     = 0 " 補完候補の1番目を選択しない
+  let g:jedi#show_call_signatures   = 0 " 関数の引数表示を無効(ポップアップのバグを踏んだことがあるため)
+  autocmd FileType python setlocal omnifunc=jedi#completions   " 補完エンジンはjediを使う
+endfunction
 " ----------------------------------------------------
 " キーバインド
 " ----------------------------------------------------
@@ -238,6 +217,10 @@ nnoremap su :<C-u>Unite file_mru buffer<CR>
 nnoremap <ESC><ESC> :nohlsearch<CR>
 vnoremap < <gv
 vnoremap > >gv
+
+" ノーマルモード時だけ ; と : を入れ替える
+nnoremap ; :
+nnoremap : ;
 
 " ------------------------------------------------------------------------
 " その他の設定ファイル

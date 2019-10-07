@@ -4,17 +4,17 @@ bindkey -v
 
 ## Prompt
 #
-# autoload -Uz vcs_info
-# setopt prompt_subst
-# zstyle ':vcs_info:git:*' check-for-changes true
-# zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-# zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-# zstyle ':vcs_info:*' formats "%F{green}%u%c[%b]%f"
-# zstyle ':vcs_info:*' actionformats '[%b|%a]'
-# precmd () { vcs_info }
-# 
-# PROMPT=[%~]'${vcs_info_msg_0_} $ '
-PROMPT=[%~]' '
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
+zstyle ':vcs_info:*' formats "%F{green}%u%c[%b]%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () { vcs_info }
+PROMPT=[%~]'${vcs_info_msg_0_} '
+
+#PROMPT=[%~]' '
 RPROMPT=''
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
   PROMPT="%F{white}${HOST%%.*}%f ${PROMPT}"

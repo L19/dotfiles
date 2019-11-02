@@ -1,8 +1,9 @@
 path=(
-/usr/local/bin
-${HOME}/Library/Android/sdk/platform-tools(N-/)
-${HOME}/Library/Android/sdk/ndk-bundle(N-/)
-$path
+  /usr/local/sbin
+  /usr/local/bin
+  ${HOME}/Library/Android/sdk/platform-tools(N-/)
+  ${HOME}/Library/Android/sdk/ndk-bundle(N-/)
+  $path
 )
 
 if [ -d ${HOME}/.pyenv ]; then

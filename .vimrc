@@ -1,38 +1,45 @@
 " ----------------------------------------------
 " プラグインの管理
 " ----------------------------------------------
-
-" deinが未インストールの場合はインストール
-let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.vim') : $XDG_CACHE_HOME
-let s:dein_dir = s:cache_home . '/dein'
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+if &compatible
+  set nocompatible
 endif
-let &runtimepath = s:dein_repo_dir .",". &runtimepath
+" Add the dein installation directory into runtimepath
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-call dein#begin(expand('~/.vim/dein'))
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
-call dein#add('altercation/vim-colors-solarized')
-" call dein#add('davidhalter/jedi-vim')
-call dein#add('kannokanno/previm')
-call dein#add('plasticboy/vim-markdown')
-call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/neocomplete.vim')
-call dein#add('Shougo/unite.vim')
-call dein#add('Shougo/vimfiler')
-call dein#add('tpope/vim-surround')
-call dein#add('tyru/open-browser.vim')
-call dein#add('lervag/vimtex')
-call dein#add('itchyny/vim-parenmatch')
-call dein#add('vim-scripts/twilight')
-call dein#add('sjl/badwolf')
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
 
-" call map(dein#check_clean(), "delete(v:val, 'rf')")
+"   call dein#add('altercation/vim-colors-solarized')
+"   call dein#add('davidhalter/jedi-vim')
+"   call dein#add('kannokanno/previm')
+"   call dein#add('plasticboy/vim-markdown')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/vimfiler')
+"   call dein#add('tpope/vim-surround')
+"   call dein#add('tyru/open-browser.vim')
+  call dein#add('lervag/vimtex')
+"   call dein#add('itchyny/vim-parenmatch')
+"   call dein#add('vim-scripts/twilight')
+"   call dein#add('sjl/badwolf')
+"   call map(dein#check_clean(), "delete(v:val, 'rf')")
+  call dein#add('Shougo/neco-vim')
+  call dein#add('Shougo/neco-syntax')
+  call dein#add('poppyschmo/deoplete-latex')
 
-call dein#end()
+  call dein#end()
+  call dein#save_state()
+endif
 
 filetype plugin indent on
+syntax enable
 
 " -----------------------------------------------
 " 一般設定
@@ -41,12 +48,12 @@ if has("syntax")
   syntax on
 endif
 
-if !isdirectory("~/.vim/backups")
-  call system("mkdir ~/.vim/backups")
+if !isdirectory("~/.cache/backups")
+  call system("mkdir ~/.cache/backups")
 endif
 
-if !isdirectory("~/.vim/swapfiles")
-  call system("mkdir ~/.vim/swapfiles")
+if !isdirectory("~/.cache/swapfiles")
+  call system("mkdir ~/.cache/swapfiles")
 endif
 
 set showmatch
@@ -61,14 +68,16 @@ set autoindent
 set whichwrap=b,s,h,l,[,],<,>
 set clipboard+=unnamed,autoselect
 set backspace=indent,eol,start
-set swapfile directory=~/.vim/swapfiles
-set backup backupdir=~/.vim/backups
+set swapfile directory=~/.cache/swapfiles
+set backup backupdir=~/.cache/backups
 set list listchars=tab:>-,trail:_
 set ambiwidth=double
 set spell
 set spelllang=en,cjk
 hi clear SpellBad
-hi SpellBad cterm=underline,bold
+hi SpellBad cterm=underline
+hi clear SpellCap
+hi SpellCap cterm=underline,bold
 set formatoptions+=mM
 set textwidth=0
 
@@ -97,10 +106,10 @@ set laststatus=2
 " コーディング
 " -------------------------------------------------
 "" カーソル位置を保存する
-" if has("autocmd")
-"   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
-"         \ exe "normal g`\"" | endif
-" endif
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
+        \ exe "normal g`\"" | endif
+endif
 
 "" 線を引く
 inoreabbrev <expr> dl repeat('*', 80 - col('.'))
@@ -145,18 +154,15 @@ function! UpdateSkim(status)
     call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
   endif
 endfunction
-" let g:vimtex_toc_split_pos = "topleft"
-" let g:vimtex_toc_width = 10
+let g:vimtex_toc_split_pos = "topleft"
+let g:vimtex_toc_width = 10
 let g:vimtex_matchparen_enabled = 0
 autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
 
 
-" for neocomplete
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-" let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
-" let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
+" deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Unite
 let g:unite_enable_start_insert=1
@@ -231,8 +237,8 @@ elseif has('unix')
 
 endif
 
-" neocompleteの設定読み込み
-if version >= 704 && has('lua')
-  source ~/.vim/vimrc.d/vim74.vimrc
-endif
-
+" " neocompleteの設定読み込み
+" if version >= 704 && has('lua')
+"   source ~/.vim/vimrc.d/vim74.vimrc
+" endif
+" 

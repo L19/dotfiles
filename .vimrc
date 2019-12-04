@@ -17,7 +17,7 @@ if dein#load_state('~/.cache/dein')
     call dein#add('roxma/vim-hug-neovim-rpc')
   endif
 
-"   call dein#add('altercation/vim-colors-solarized')
+  call dein#add('altercation/vim-colors-solarized')
 "   call dein#add('davidhalter/jedi-vim')
 "   call dein#add('kannokanno/previm')
 "   call dein#add('plasticboy/vim-markdown')
@@ -26,7 +26,7 @@ if dein#load_state('~/.cache/dein')
 "   call dein#add('tpope/vim-surround')
 "   call dein#add('tyru/open-browser.vim')
   call dein#add('lervag/vimtex')
-"   call dein#add('itchyny/vim-parenmatch')
+  call dein#add('itchyny/vim-parenmatch')
 "   call dein#add('vim-scripts/twilight')
 "   call dein#add('sjl/badwolf')
 "   call map(dein#check_clean(), "delete(v:val, 'rf')")
@@ -162,7 +162,15 @@ autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#enable_camel_case = 0
+let g:deoplete#enable_ignore_case = 0
+let g:deoplete#enable_refresh_always = 0
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#file#enable_buffer_path = 1
+let g:deoplete#max_list = 10000
+noremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Unite
 let g:unite_enable_start_insert=1

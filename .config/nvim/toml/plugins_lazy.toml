@@ -1,0 +1,69 @@
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_i = 1
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#auto_completion_start_length = 1
+  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+          \ neosnippet#expandable_or_jumpable() ?
+          \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_source = 'deoplete.nvim'
+hook_add = '''
+  " Plugin key-mappings.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+  
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+  let g:tex_conceal=''
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_source = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = 'tex'
+hook_source = '''
+  let g:tex_flavor = "latex"
+  let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
+  let g:vimtex_view_general_viewer
+        \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+  let g:vimtex_view_general_options = '-r @line @pdf @tex'
+  let g:vimtex_complier_progname = 'nvr'
+  let g:vimtex_compiler_callback_hooks = ['UpdateSkim']
+  function! UpdateSkim(status)
+    if !a:status | return | endif
+  
+    let l:out = b:vimtex.out()
+    let l:tex = expand('%:p')
+    let l:cmd = [g:vimtex_view_general_viewer, '-r']
+    if !empty(system('pgrep Skim'))
+      call extend(l:cmd, ['-g'])
+    endif
+    if has('nvim')
+      call jobstart(l:cmd + [line('.'), l:out, l:tex])
+    elseif has('job')
+      call job_start(l:cmd + [line('.'), l:out, l:tex])
+    else
+      call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
+    endif
+  endfunction
+  let g:vimtex_toc_split_pos = "topleft"
+  let g:vimtex_toc_width = 10
+  let g:vimtex_matchparen_enabled = 0
+  autocmd BufReadPre *.tex let b:vimtex_main = 'main.tex'
+'''
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'

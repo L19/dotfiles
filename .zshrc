@@ -53,8 +53,8 @@ case ${OSTYPE} in
   darwin*)
     alias ls="ls -G"
     alias ldiff="latexdiff-vc -e utf8 --git --flatten --force -d diff -r HEAD"
-    alias matlab="/Applications/MATLAB_R2017a.app/bin/matlab -nodesktop
-      -r \"startup;\""
+    alias matlab="/Applications/MATLAB_R2019a.app/bin/matlab -nodesktop -r \"startup;\""
+    alias mvim="mvim --remote-tab-silent"
   ;;
   linux*)
     alias ls="ls --color=auto"

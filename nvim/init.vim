@@ -19,18 +19,23 @@ set smartindent
 set autoindent
 "
 set whichwrap=b,s,h,l,[,],<,>
+
 " use clipboard in Vim
 set clipboard+=unnamedplus
+
 " delete text by using backspace
 set backspace=indent,eol,start
+
 " search texts
 set ignorecase
 set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
+
 " highlight found texts
 set hlsearch
+
 " use spell check
 set spell
 set spelllang=en,cjk
@@ -38,13 +43,13 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 hi clear SpellCap
 hi SpellCap cterm=underline,bold
-" change color scheme
-" set termguicolors
-set background=dark
-colorscheme tender
 
+" show long lone
 set display=lastline
+
+" show 10 candidates
 set pumheight=10
+
 set swapfile directory=~/.cache/swapfiles
 set backup backupdir=~/.cache/backups
 " ------------------------------------------
@@ -96,8 +101,8 @@ if dein#load_state('~/.cache/dein')
   call dein#begin('~/.cache/dein')
 
   let g:config_dir  = expand('~/.config/nvim/toml')
-  let s:toml        = g:config_dir . '/plugins.toml'
-  let s:lazy_toml   = g:config_dir . '/plugins_lazy.toml'
+  let s:toml        = g:config_dir . '/dein.toml'
+  let s:lazy_toml   = g:config_dir . '/dein_lazy.toml'
 
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})

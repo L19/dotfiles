@@ -18,3 +18,8 @@ fi
 if [ -d ${HOME}/.nvm ]; then
   export NVM_DIR=~/.nvm
 fi
+
+path=(
+  ~/.tmux/bin(N-/)
+  $path
+)

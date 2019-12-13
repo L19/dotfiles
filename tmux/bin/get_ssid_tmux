@@ -8,11 +8,22 @@ if air_info=($(eval "$airport_path" -I | grep -E "^ *(agrCtlRSSI|state|SSID):" |
   state=${air_info[1]}
   ssid=${air_info[2]}
 
+  if [ $rssi -ge -60 ]; then
+    rssi_=5
+  elif [ $rssi -le -61 -a $rssi -ge -70 ]; then
+    rssi_=4
+  elif [ $rssi -le -71 -a $rssi -ge -85 ]; then
+    rssi_=3
+  elif [ $rssi -le -86 -a $rssi -ge -95 ]; then
+    rssi_=2
+  else
+    rssi_=1
+  fi
+
   case "$state" in
     "running" )
       signals=(▁ ▂ ▄ ▆ █)
       signal=""
-      rssi_=$(expr 5 - ${rssi} / -20)
       for ((i=0; i < $rssi_; i++ )); do
         signal="${signal}${signals[$i]}"
       done

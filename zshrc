@@ -39,3 +39,16 @@ bindkey "^p" history-beginning-search-backward-end
 bindkey "^n" history-beginning-search-forward-end
 bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
+
+
+if [ -d ${HOME}/.nvm ]; then
+  export NVM_DIR=~/.nvm
+fi
+
+export PYENV_ROOT="/usr/local/var/pyenv"
+if which pyenv > /dev/null; then
+  eval "$(pyenv init -)";
+fi
+if which pyenv-virtualenv-init > /dev/null; then
+  eval "$(pyenv virtualenv-init -)";
+fi

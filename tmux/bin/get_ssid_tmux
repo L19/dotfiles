@@ -21,16 +21,20 @@ if air_info=($(eval "$airport_path" -I | grep -E "^ *(agrCtlRSSI|state|SSID):" |
   fi
 
   case "$state" in
-    "running" )
+    "running" | "scanning" )
       signals=(▁ ▂ ▄ ▆ █)
       signal=""
       for ((i=0; i < $rssi_; i++ )); do
         signal="${signal}${signals[$i]}"
       done
       airport_=" #[underscore]${ssid}#[default] | ${signal} "
-    ;;
-    "init"    ) airport_="#[fg=yellow] ... " ;;
-    *         ) airport_="#[fg=red] ✘  " ;;
+      ;;
+    "init" )
+      airport_="#[fg=yellow] ... "
+      ;;
+    * )
+      airport_="#[fg=red] ✘  "
+      ;;
   esac  
   echo "#[bold]|#[default]${airport_}#[fg=colour014]|#[default] "
 fi

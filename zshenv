@@ -12,7 +12,8 @@ fi
 
 path=(
   ~/.tmux/bin(N-/)
-  /usr/local/opt/opencv@3/bin
+  ~/.pyenv/shims(N-/)
+  /usr/local/opt/opencv@3/bin(N-/)
   $path
 )
 

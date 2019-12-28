@@ -47,7 +47,7 @@ if [ -d ${HOME}/.nvm ]; then
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 fi
 
-export PYENV_ROOT="/usr/local/var/pyenv"
+# export PYENV_ROOT="/usr/local/var/pyenv"
 if which pyenv > /dev/null; then
   eval "$(pyenv init -)";
 fi

@@ -11,7 +11,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-alias tnvim="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
+alias vi='nvim'
+alias tvi="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
 alias matlab="/Applications/MATLAB_R2019a.app/bin/matlab -nojvm -nodesktop"
 
 autoload -Uz compinit

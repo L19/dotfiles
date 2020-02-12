@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 alias vi='nvim'
 alias tvi="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
-alias matlab="/Applications/MATLAB_R2019a.app/bin/matlab -nojvm -nodesktop"
+alias matlab="/Applications/MATLAB_R2019a.app/bin/matlab -nojvm -nodesktop -sd /Users/l19/Documents/MATLAB"
 
 autoload -Uz compinit
 compinit
@@ -55,3 +55,4 @@ fi
 if which pyenv-virtualenv-init > /dev/null; then
   eval "$(pyenv virtualenv-init -)";
 fi
+function gi() { curl -sLw n https://www.gitignore.io/api/$@ ;}

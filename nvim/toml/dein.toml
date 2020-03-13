@@ -104,3 +104,6 @@ hook_add = '''
   set background=dark
   colorscheme tender
 '''
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'

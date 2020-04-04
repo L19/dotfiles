@@ -52,6 +52,12 @@ set pumheight=10
 
 set swapfile directory=~/.cache/swapfiles
 set backup backupdir=~/.cache/backups
+
+augroup QuickFixCmd
+  autocmd!
+  autocmd QuickFixCmdPost *grep* cwindow
+augroup END
+
 " ------------------------------------------
 " Key bind
 " ------------------------------------------

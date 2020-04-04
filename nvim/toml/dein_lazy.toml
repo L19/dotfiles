@@ -30,11 +30,6 @@ hook_add = '''
 repo = 'Shougo/neosnippet-snippets'
 on_source = 'deoplete.nvim'
 
-
-[[plugins]]
-repo = 'deoplete-plugins/deoplete-jedi'
-on_source = 'deoplete.nvim'
-
 [[plugins]]
 repo = 'lervag/vimtex'
 on_ft = 'tex'

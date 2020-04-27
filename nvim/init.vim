@@ -67,7 +67,6 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap ( ()<ESC>i
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap [ []<Left>
-inoremap $ $$<Left>
 " split windows
 nnoremap <silent> <S-j> :split<CR>
 nnoremap <silent> <S-l> :vsplit<CR>
@@ -93,6 +92,9 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 
 nnoremap <ESC><ESC> :noh<CR>
+
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
 
 " ------------------------------------------
 " dein settings

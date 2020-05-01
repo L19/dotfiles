@@ -96,6 +96,9 @@ nnoremap <ESC><ESC> :noh<CR>
 let mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 
+nnoremap <CR> G
+nnoremap <BS> gg
+
 " ------------------------------------------
 " dein settings
 " ------------------------------------------

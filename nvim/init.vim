@@ -1,5 +1,5 @@
 " ------------------------------------------
-" Basic settings
+" basic settings
 " ------------------------------------------
 " highlight corresponding brackets
 set showmatch
@@ -58,6 +58,10 @@ augroup QuickFixCmd
   autocmd QuickFixCmdPost *grep* cwindow
 augroup END
 
+
+let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
+
 " ------------------------------------------
 " Key bind
 " ------------------------------------------
@@ -67,6 +71,9 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap ( ()<ESC>i
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap [ []<Left>
+" switch normal mode and save the file by 'jj'
+inoremap <silent> jj <ESC>:<C-u>w<CR>
+
 " split windows
 nnoremap <silent> <S-j> :split<CR>
 nnoremap <silent> <S-l> :vsplit<CR>
@@ -81,8 +88,6 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-" switch normal mode and save the file by 'jj'
-inoremap <silent> jj <ESC>:<C-u>w<CR>
 " replace ';' by ':' in normal mode
 nnoremap ; :
 nnoremap : ;
@@ -93,11 +98,9 @@ nnoremap - <C-x>
 
 nnoremap <ESC><ESC> :noh<CR>
 
-let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
-
-nnoremap <CR> G
-nnoremap <BS> gg
+nnoremap <Leader>o :Denite file/rec<CR>
+nnoremap <Leader>w :w<CR>
+nmap <Leader><Leader> V
 
 " ------------------------------------------
 " dein settings

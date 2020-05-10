@@ -135,3 +135,9 @@ hook_add = '''
   vmap v <Plug>(expand_region_expand)
   vmap <C-v> <Plug>(expand_region_shrink)
 '''
+
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'
+
+[[plugins]]
+repo = 'tpope/vim-commentary'

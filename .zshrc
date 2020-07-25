@@ -16,7 +16,7 @@ alias tvi="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
 alias matlab="/Applications/MATLAB_R2020a.app/bin/matlab -nojvm -nodesktop -sd /Users/l19/Documents/MATLAB"
 
 autoload -Uz compinit
-compinit
+compinit -u
 
 # dont distinguish uppercase from lower case at completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

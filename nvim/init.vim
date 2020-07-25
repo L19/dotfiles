@@ -51,7 +51,7 @@ set display=lastline
 set pumheight=10
 
 set swapfile directory=~/.cache/swapfiles
-set backup backupdir=~/.cache/backups
+" set backup backupdir=~/.cache/backups
 
 augroup QuickFixCmd
   autocmd!
@@ -136,5 +136,5 @@ syntax enable
 " ------------------------------------------
 " python settings
 " ------------------------------------------
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim/bin/python')
+" let g:python3_host_prog = expand('~/.pyenv/versions/neovim/bin/python')
 

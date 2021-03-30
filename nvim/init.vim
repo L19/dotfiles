@@ -136,5 +136,5 @@ syntax enable
 " ------------------------------------------
 " python settings
 " ------------------------------------------
-" let g:python3_host_prog = expand('~/.pyenv/versions/neovim/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim/bin/python')
 

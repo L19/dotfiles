@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 alias vi='nvim'
 alias tvi="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
-alias matlab="/Applications/MATLAB_R2020a.app/bin/matlab -nojvm -nodesktop -sd /Users/l19/Documents/MATLAB"
+alias matlab="/Applications/MATLAB_R2020a.app/bin/matlab -nodesktop -sd /Users/l19/Documents/MATLAB"
 
 autoload -Uz compinit
 compinit -u

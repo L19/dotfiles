@@ -68,3 +68,27 @@ hook_source = '''
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+[[plugins]]
+repo = 'heavenshell/vim-jsdoc'
+on_ft = 'javascript'
+hook_source = '''
+  let g:jsdoc_enable_es6 = 1
+'''
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'previm/previm'
+on_source = 'vim-markdown.vim'
+hook_add = '''
+    autocmd BufRead,BufNewFile *.md  set filetype=markdown
+    nnoremap <silent> <C-p> :PrevimOpen<CR>
+    let g:vim_markdown_folding_disabled=1
+    let g:previm_enable_realtime=1
+'''
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_source = 'vim-markdown.vim'
